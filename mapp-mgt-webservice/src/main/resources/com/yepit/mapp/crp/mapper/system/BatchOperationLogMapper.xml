@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yepit.mapp.crp.mapper.system.BatchOperationLogMapper" >
+  <resultMap id="BaseResultMap" type="com.yepit.mapp.crp.domain.system.BatchOperationLog" >
+    <id column="batch_id" property="batchId" jdbcType="VARCHAR" />
+    <result column="file_id" property="fileId" jdbcType="VARCHAR" />
+    <result column="upload_file_path" property="uploadFilePath" jdbcType="VARCHAR" />
+    <result column="upload_file_url" property="uploadFileUrl" jdbcType="VARCHAR" />
+    <result column="batch_type" property="batchType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="result_desc" property="resultDesc" jdbcType="VARCHAR" />
+    <result column="result_file_path" property="resultFilePath" jdbcType="VARCHAR" />
+    <result column="result_file_url" property="resultFileUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_operator" property="createOperator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_operator" property="updateOperator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    batch_id, file_id, upload_file_path, upload_file_url, batch_type, status, result_desc, 
+    result_file_path, result_file_url, create_time, create_operator, update_time, update_operator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_batch_opeation_log
+    where batch_id = #{batchId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from b_batch_opeation_log
+    where batch_id = #{batchId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yepit.mapp.crp.domain.system.BatchOperationLog" >
+    insert into b_batch_opeation_log (batch_id, file_id, upload_file_path, 
+      upload_file_url, batch_type, status, 
+      result_desc, result_file_path, result_file_url, 
+      create_time, create_operator, update_time, 
+      update_operator)
+    values (#{batchId,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, #{uploadFilePath,jdbcType=VARCHAR}, 
+      #{uploadFileUrl,jdbcType=VARCHAR}, #{batchType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{resultDesc,jdbcType=VARCHAR}, #{resultFilePath,jdbcType=VARCHAR}, #{resultFileUrl,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateOperator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yepit.mapp.crp.domain.system.BatchOperationLog" >
+    insert into b_batch_opeation_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="batchId != null" >
+        batch_id,
+      </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="uploadFilePath != null" >
+        upload_file_path,
+      </if>
+      <if test="uploadFileUrl != null" >
+        upload_file_url,
+      </if>
+      <if test="batchType != null" >
+        batch_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="resultDesc != null" >
+        result_desc,
+      </if>
+      <if test="resultFilePath != null" >
+        result_file_path,
+      </if>
+      <if test="resultFileUrl != null" >
+        result_file_url,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createOperator != null" >
+        create_operator,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateOperator != null" >
+        update_operator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="batchId != null" >
+        #{batchId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadFilePath != null" >
+        #{uploadFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadFileUrl != null" >
+        #{uploadFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="batchType != null" >
+        #{batchType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="resultDesc != null" >
+        #{resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFilePath != null" >
+        #{resultFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFileUrl != null" >
+        #{resultFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yepit.mapp.crp.domain.system.BatchOperationLog" >
+    update b_batch_opeation_log
+    <set >
+      <if test="fileId != null" >
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadFilePath != null" >
+        upload_file_path = #{uploadFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadFileUrl != null" >
+        upload_file_url = #{uploadFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="batchType != null" >
+        batch_type = #{batchType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="resultDesc != null" >
+        result_desc = #{resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFilePath != null" >
+        result_file_path = #{resultFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFileUrl != null" >
+        result_file_url = #{resultFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null" >
+        create_operator = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        update_operator = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where batch_id = #{batchId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yepit.mapp.crp.domain.system.BatchOperationLog" >
+    update b_batch_opeation_log
+    set file_id = #{fileId,jdbcType=VARCHAR},
+      upload_file_path = #{uploadFilePath,jdbcType=VARCHAR},
+      upload_file_url = #{uploadFileUrl,jdbcType=VARCHAR},
+      batch_type = #{batchType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      result_desc = #{resultDesc,jdbcType=VARCHAR},
+      result_file_path = #{resultFilePath,jdbcType=VARCHAR},
+      result_file_url = #{resultFileUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_operator = #{createOperator,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_operator = #{updateOperator,jdbcType=VARCHAR}
+    where batch_id = #{batchId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="listByCond" resultMap="BaseResultMap" parameterType="com.yepit.mapp.crp.dto.system.SearchBatchLogRequest" >
+    select
+    <include refid="Base_Column_List" />
+    from b_batch_opeation_log
+    where 1=1
+    <if test="status != null">
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="batchType != null">
+      and batch_type = #{batchType,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+      <![CDATA[
+        AND create_time >= CONCAT(#{startTime},' 00:00:00')
+
+        AND create_time <= CONCAT(#{endTime},' 23:59:59')
+        ]]>
+    </if>
+     order by create_time desc
+  </select>
+</mapper>

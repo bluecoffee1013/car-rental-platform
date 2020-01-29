@@ -1,0 +1,11 @@
+version: "3"
+services:
+  mapp-eureka:
+    image: mapp-eureka
+    container_name:  mapp-eureka
+    ports:
+      - 8761:8761
+    volumes:
+          - /home/web/logs/eureka:/logs:rw
+    restart:  always
+    privileged:  true

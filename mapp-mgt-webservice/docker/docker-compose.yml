@@ -1,0 +1,11 @@
+version: "3"
+services:
+  mapp-mgt-webservice:
+    image: mapp-mgt-webservice
+    container_name:  mapp-mgt-webservice
+    ports:
+      - 9080:9080
+    volumes:
+          - /home/web/logs/mgt:/logs:rw
+    restart:  always
+    privileged:  true

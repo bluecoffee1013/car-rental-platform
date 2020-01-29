@@ -1,0 +1,11 @@
+version: "3"
+services:
+  mapp-flow:
+    image: mapp-flow
+    container_name:  mapp-flow
+    ports:
+      - 8383:8383
+    volumes:
+          - /home/web/logs/flow:/logs:rw
+    restart:  always
+    privileged:  true

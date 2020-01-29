@@ -1,0 +1,11 @@
+version: "3"
+services:
+  mapp-gateway:
+    image: mapp-gateway
+    container_name:  mapp-gateway
+    ports:
+      - 9088:9088
+    volumes:
+          - /home/web/logs/gateway:/logs:rw
+    restart:  always
+    privileged:  true

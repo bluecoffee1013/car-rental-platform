@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+       default-lazy-init="true">
+
+    <description>Activiti Configuration</description>
+
+    <!-- Activiti begin -->
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <property name="dataSource" ref="dataSource" />
+        <property name="transactionManager" ref="transactionManager" />
+        <property name="deploymentResources" value="classpath*:/process/CarRental.bpmn" />
+        <property name="databaseSchemaUpdate" value="true" />
+        <property name="jobExecutorActivate" value="false" /><!-- 该参数将启用定时相关的功能 -->
+        <property name="asyncExecutorEnabled" value="true" />
+        <property name="asyncExecutorActivate" value="true" />
+        <property name="history" value="full" /><!-- 最高级别的历史信息存档，同样也是最慢的 none-->
+        <!--<property name="processDefinitionCacheLimit" value="${activiti.ipaas.flow.processDefinitionCacheLimit}" />-->
+        <property name="createDiagramOnDeploy" value="true" />
+       <!-- <property name="asyncExecutor" ref="asyncExecutor" />-->
+        <!-- UUID作为主键生成策略 -->
+     <!--   <property name="idGenerator">
+            <bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator" />
+        </property>-->
+
+        <!-- 自定义用户权限 ，必须重新实现用户和组的相应方法 -->
+        <!-- <property name="customSessionFactories"> <list> <bean class="com.ai.channel.flow.base.ext.user.ActUserEntityServiceFactory"/>
+            <bean class="com.ai.channel.flow.base.ext.role.ActRoleEntityServiceFactory"/>
+            </list> </property> -->
+
+        <!-- 生成流程图的字体 -->
+        <property name="activityFontName" value="宋体" />
+        <property name="labelFontName" value="宋体" />
+        <property name="annotationFontName" value="宋体" /><!-- 5.21.0 新增参数 -->
+
+       <!-- <property name="eventListeners">
+            <list>
+                <ref bean="globalEventListener" />
+            </list>
+        </property>-->
+    </bean>
+
+    <!-- 引擎工厂配置相应配置 -->
+    <bean id="processEngineFactory" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+    </bean>
+
+   <!-- &lt;!&ndash; 覆盖默认的异步执行器配置 &ndash;&gt;
+    <bean id="asyncExecutor" class="org.activiti.engine.impl.asyncexecutor.DefaultAsyncJobExecutor">
+        <property name="corePoolSize" value="${async.ipaas.flow.corePoolSize}" />
+        <property name="maxPoolSize" value="100" />
+        <property name="keepAliveTime" value="${async.ipaas.flow.keepAliveTime}" />
+        <property name="queueSize" value="${async.ipaas.flow.queueSize}" />
+        <property name="maxTimerJobsPerAcquisition" value="${async.ipaas.flow.maxTimerJobsPerAcquisition}" />
+        <property name="maxAsyncJobsDuePerAcquisition" value="${async.ipaas.flow.maxAsyncJobsDuePerAcquisition}" />
+        <property name="defaultAsyncJobAcquireWaitTimeInMillis" value="${async.ipaas.flow.defaultAsyncJobAcquireWaitTimeInMillis}" />
+        <property name="defaultTimerJobAcquireWaitTimeInMillis" value="${async.ipaas.flow.defaultTimerJobAcquireWaitTimeInMillis}" />
+        <property name="timerLockTimeInMillis" value="${async.ipaas.flow.timerLockTimeInMillis}" />
+        <property name="asyncJobLockTimeInMillis" value="${async.ipaas.flow.asyncJobLockTimeInMillis}" />
+    </bean>-->
+
+    <!-- 引擎bean声明 -->
+    <bean id="processEngine" factory-bean="processEngineFactory"
+          factory-method="getObject" />
+    <bean id="repositoryService" factory-bean="processEngineFactory"
+          factory-method="getRepositoryService" />
+    <bean id="runtimeService" factory-bean="processEngineFactory"
+          factory-method="getRuntimeService" />
+    <bean id="formService" factory-bean="processEngineFactory"
+          factory-method="getFormService" />
+    <bean id="identityService" factory-bean="processEngineFactory"
+          factory-method="getIdentityService" />
+    <bean id="taskService" factory-bean="processEngineFactory"
+          factory-method="getTaskService" />
+    <bean id="historyService" factory-bean="processEngineFactory"
+          factory-method="getHistoryService" />
+    <bean id="managementService" factory-bean="processEngineFactory"
+          factory-method="getManagementService" />
+
+
+   <!-- &lt;!&ndash; 设置默认的资源类型 &ndash;&gt;
+    <bean id="contentTypeResolver"
+          class="org.activiti.rest.common.application.DefaultContentTypeResolver" />
+
+    &lt;!&ndash; Activiti end &ndash;&gt;
+    <bean id="globalEventListener" class="com.aii.ipaas.flow.base.listener.GlobalEventListener">
+        <property name="handlers">
+            <map>
+                &lt;!&ndash; 流程实例异常结束 开始 &ndash;&gt;
+                <entry key="PROCESS_COMPLETED_WITH_ERROR_END_EVENT" value="processCompletedWithErrorEndEventListener"/>
+                &lt;!&ndash; 流程实例异常结束 结束 &ndash;&gt;
+                &lt;!&ndash; 抛出了未捕获的BPMN错误。流程没有提供针对这个错误的处理器。 事件的activityId为空。 开始 &ndash;&gt;
+                <entry key="UNCAUGHT_BPMN_ERROR" value="uncaughtBpmnErrorListener" />
+                &lt;!&ndash; 抛出了未捕获的BPMN错误 结束 &ndash;&gt;
+            </map>
+        </property>
+    </bean>-->
+
+</beans>

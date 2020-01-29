@@ -1,0 +1,50 @@
+#server:
+#    servlet:
+#      context-path: /mapp-flow
+
+spring:
+  application:
+    name: mapp-flow
+  profiles:
+    active: prod
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  aop:
+    auto: true
+  http:
+    encoding:
+      force: true
+  servlet:
+    multipart:
+      enabled: true
+      # Threshold after which files will be written to disk.
+      file-size-threshold: 0
+      # Intermediate location of uploaded files.
+      location:
+      # Max file size.
+      max-file-size: 1Mb
+      # Max request size.
+      max-request-size: 10Mb
+  activiti:
+    check-process-definitions: false
+    async-executor-activate: false
+    async-executor-enabled: false
+    job-executor-activate: false
+    custom-mybatis-mappers:
+    custom-mybatis-xmlmappers:
+#公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
+mybatis:
+  typeAliasesPackage: com.yepit.flow.bo
+  mapperLocations: classpath:mapper/*.xml
+system:
+  passwordtype: 1 #密码加密方式 1-不加密 2-MD5加密
+  sessionVaild: 1 #是否开启session校验,开发时可暂时关闭,1-开启 2-关闭
+
+token:
+  secret: msp!@#$ # token 加密密钥
+  expiration: 604800 #token 过期时间，以秒为单位，604800 是 一星期
+
+
+
+
